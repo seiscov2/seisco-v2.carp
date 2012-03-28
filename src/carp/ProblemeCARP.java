@@ -564,18 +564,33 @@ public class ProblemeCARP extends Probleme {
                 if ((noeudDepart <= nbNoeuds) && (noeudArrive <= nbNoeuds)) {
                     Noeud n1 = noeuds.get(noeudDepart - 1);
                     Noeud n2 = noeuds.get(noeudArrive - 1);
+                    
+                    //TEST BBOI: INVERSE ----- DEBUT MODIF
+                    /*
                     Arc t = new Arc(n1, n2);
                     t.ajouterCout(new Cout(Arc.NOM_COUT_PARCOURS, cout));
                     t.ajouterPropriete(new Propriete(GrapheCARP.NOM_PROPRIETE_DEMANDE, demande));
+                    taches.add(t);
+
                     Arc t2 = new Arc(n2, n1, false);
                     t2.ajouterCout(new Cout(Arc.NOM_COUT_PARCOURS, cout));
                     //t2.ajouterPropriete(new Propriete(GrapheCARP.NOM_PROPRIETE_DEMANDE, demande));
 
-                    taches.add(t);
-
                     // Ajout d'adjacence au noeud
                     noeuds.get(noeudDepart - 1).addAdjacent(t);
                     noeuds.get(noeudArrive - 1).addAdjacent(t2);
+                    //*/
+                    //*
+                    Arc t = new Arc(n2, n1);
+                    t.ajouterCout(new Cout(Arc.NOM_COUT_PARCOURS, cout));
+                    t.ajouterPropriete(new Propriete(GrapheCARP.NOM_PROPRIETE_DEMANDE, demande));
+                    taches.add(t);
+                    
+                    // Ajout d'adjacence au noeud
+                    noeuds.get(noeudArrive - 1).addAdjacent(t);
+                    noeuds.get(noeudDepart - 1).addAdjacent(t.swap().clone());
+                    //*/
+                    //TEST BBOI: INVERSE ----- FIN MMODIF
                 }
             }
         }
