@@ -485,6 +485,9 @@ public class ProblemeCARP extends Probleme {
         List<Noeud> noeuds = new ArrayList<Noeud>();
         List<Arc> taches = new ArrayList<Arc>();
 
+        // Remise à 1 du compteur des noeuds
+        Noeud.init();
+        
         lecteur = new BufferedReader(new FileReader(nomFichier));
 
         // Premiere ligne = nom
