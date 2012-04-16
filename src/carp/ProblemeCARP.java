@@ -169,6 +169,11 @@ public class ProblemeCARP extends Probleme {
                         for (int k = i + 1; k < j; k++) {
 
                             nextTask = tachesSol.get(k);
+                            
+                            // Pour éviter des déplacements inutiles
+                            if(currentArrivee.equals(nextTask.getArrivee()))
+                                nextTask.swap();
+                            
                             nextDepart = nextTask.getDepart();
                             nextArrivee = nextTask.getArrivee();
 
