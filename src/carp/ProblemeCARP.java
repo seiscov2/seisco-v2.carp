@@ -591,7 +591,7 @@ public class ProblemeCARP extends Probleme {
                     
                     // Ajout d'adjacence au noeud
                     noeuds.get(noeudArrive - 1).addAdjacent(t);
-                    noeuds.get(noeudDepart - 1).addAdjacent(t.swap().clone());
+                    noeuds.get(noeudDepart - 1).addAdjacent(t.clone().swap());
                     //*/
                     //TEST BBOI: INVERSE ----- FIN MMODIF
                 }
