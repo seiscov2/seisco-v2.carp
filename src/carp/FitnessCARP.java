@@ -143,11 +143,8 @@ public class FitnessCARP {
 				nbTrips++;
 			}
 		
-        resultat.setCoutTotal(dist);
+                resultat.setCoutTotal(dist);
 		sol.setResultat(resultat);
-
-		//System.out.println("DISTANCE: " + dist);
-		//System.out.println("NBTRIPS: " + nbTrips);
 
 		return dist;
 	}

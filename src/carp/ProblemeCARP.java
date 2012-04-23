@@ -156,14 +156,9 @@ public class ProblemeCARP extends Probleme {
                         // Distance du dépôt au sommet de départ courant
                         longueur = distancier[depot - 1][currentDepart.getNumero() - 1];
 
-//						System.out.println("———————————————————————————————————————————————————————————————————————————————————————————————");
-//						System.out.println("Distance du dépôt au sommet de départ courant (" + currentDepart.getNumero() + ") : " + longueur);
-
                         // Distance pour parcourir la tache courante
                         if (currentTask.coutPresent(Arc.NOM_COUT_PARCOURS))
                             longueur += currentTask.getCout(Arc.NOM_COUT_PARCOURS).getValeur();
-
-//						System.out.println("\tCout de parcours : " + currentTask.getCout(Arc.NOM_COUT_PARCOURS).getValeur());
 
                         // Distance pour atteindre la tache suivante + distance de la tache parcourue
                         for (int k = i + 1; k < j; k++) {
@@ -180,13 +175,9 @@ public class ProblemeCARP extends Probleme {
                             // Distance pour rejoindre la tache suivante
                             longueur += distancier[currentArrivee.getNumero() - 1][nextDepart.getNumero() - 1];
 
-//							System.out.println("Distance de (" + currentArrivee.getNumero() + ") à (" + nextDepart.getNumero() + ") : " + distancier[currentArrivee.getNumero() - 1][nextDepart.getNumero() - 1]);
-
                             // Distance de la tache suivante parcourue
                             if (nextTask.coutPresent(Arc.NOM_COUT_PARCOURS))
                                 longueur += nextTask.getCout(Arc.NOM_COUT_PARCOURS).getValeur();
-
-//							System.out.println("\tCout de parcours : " + nextTask.getCout(Arc.NOM_COUT_PARCOURS).getValeur());
 
                             /*
                              * Le noeud d'arrivee de la tache suivante devient
@@ -201,40 +192,12 @@ public class ProblemeCARP extends Probleme {
                         // Distance pour rejoindre le depot
                         longueur += distancier[currentArrivee.getNumero() - 1][depot - 1];
 
-//						System.out.println("Distance de (" + currentArrivee.getNumero() + ") jusqu'au depot : " + distancier[currentArrivee.getNumero() - 1][depot - 1]);
-//						System.out.println("\t\tTOTAL=" + longueur);
-
                         tourneeViable[i][j] = longueur;
                     }
                 }
 
             Date dateFin = new Date();
             timeBoucles += dateFin.getTime() - dateDebut.getTime();
-
-            //BOI
-			/*
-             * Afficher tourneeViable
-             */
-            /*
-            System.out.print(
-                    "Tournee Viable\n"
-                    + "——————————————\n"
-                    + "\t");
-            for (int i = 0; i < tourneeViable.length; i++)
-                System.out.print(i + "\t");
-            System.out.print("\n");
-            for (int i = 0; i < tourneeViable.length; i++) {
-                System.out.print(i + "\t");
-                for (int j = 0; j < tourneeViable.length; j++) {
-                    float t = tourneeViable[i][j];
-                    if (t != Float.POSITIVE_INFINITY)
-                        System.out.print(t + "\t");
-                    else
-                        System.out.print(".\t");
-                }
-                System.out.print("\n");
-            }
-            //*/
 
             // Calcul du chemin le plus court dans le graphe tourneeViable
             dateDebut = new Date();
@@ -329,10 +292,6 @@ public class ProblemeCARP extends Probleme {
      * @see Dijkstra#initialiserDistancier(seisco.util.graphe.Graphe) 
      */
     public void initialiserDistancier() {
-//		dijkstra = new DijkstraOrientedOnly(graphe);
-//		dijkstra.executer(graphe.getNoeuds().get(depot - 1));
-//		distancier = dijkstra.getDistancier();
-
         Noeud dep = null;
         for (Noeud n : graphe.getNoeuds())
             if (n.getNumero() == depot) {
@@ -341,42 +300,6 @@ public class ProblemeCARP extends Probleme {
             }
 
         distancier = Dijkstra.initialiserDistancier(graphe);
-
-        //BOI
-			/*
-         * Afficher distancier
-         */
-        /*
-        System.out.print(
-                "Distancier Dijkstra\n"
-                + "———————————————————\n"
-                + "\t");
-        for (int i = 0; i < distancier.length; i++)
-            System.out.print(i + "\t");
-        System.out.print("\n");
-        for (int i = 0; i < distancier.length; i++) {
-            System.out.print(i + "\t");
-            for (int j = 0; j < distancier.length; j++) {
-                float t = distancier[i][j];
-                if (t != Float.MAX_VALUE)
-                    System.out.print(t + "\t");
-                else
-                    System.out.print(".\t");
-            }
-            System.out.print("\n");
-        }
-        //*/
-
-//		if(conditionPresente(NOM_CONDITION_NB_SOMMETS)) {
-//			
-//			Arc[] tachesTab = new Arc[taches.size()];
-//				tachesTab = taches.toArray(tachesTab);
-//				
-//			OldDijkstra distancier = new OldDijkstra((Integer)getCondition(NOM_CONDITION_NB_SOMMETS).getValeur());
-//			distancier.make(tachesTab);
-//			distancier = distancier.get();
-//			
-//		}
     }
 
     /**
@@ -574,22 +497,6 @@ public class ProblemeCARP extends Probleme {
                     Noeud n1 = noeuds.get(noeudDepart - 1);
                     Noeud n2 = noeuds.get(noeudArrive - 1);
                     
-                    //TEST BBOI: INVERSE ----- DEBUT MODIF
-                    /*
-                    Arc t = new Arc(n1, n2);
-                    t.ajouterCout(new Cout(Arc.NOM_COUT_PARCOURS, cout));
-                    t.ajouterPropriete(new Propriete(GrapheCARP.NOM_PROPRIETE_DEMANDE, demande));
-                    taches.add(t);
-
-                    Arc t2 = new Arc(n2, n1, false);
-                    t2.ajouterCout(new Cout(Arc.NOM_COUT_PARCOURS, cout));
-                    //t2.ajouterPropriete(new Propriete(GrapheCARP.NOM_PROPRIETE_DEMANDE, demande));
-
-                    // Ajout d'adjacence au noeud
-                    noeuds.get(noeudDepart - 1).addAdjacent(t);
-                    noeuds.get(noeudArrive - 1).addAdjacent(t2);
-                    //*/
-                    //*
                     Arc t = new Arc(n2, n1);
                     t.ajouterCout(new Cout(Arc.NOM_COUT_PARCOURS, cout));
                     t.ajouterPropriete(new Propriete(GrapheCARP.NOM_PROPRIETE_DEMANDE, demande));
@@ -598,8 +505,6 @@ public class ProblemeCARP extends Probleme {
                     // Ajout d'adjacence au noeud
                     noeuds.get(noeudArrive - 1).addAdjacent(t);
                     noeuds.get(noeudDepart - 1).addAdjacent(t.clone().swap());
-                    //*/
-                    //TEST BBOI: INVERSE ----- FIN MMODIF
                 }
             }
         }
